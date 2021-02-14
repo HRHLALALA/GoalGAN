@@ -1,5 +1,5 @@
 # @package _global_
-num_workers : 8
+num_workers : 4
 make_checkpoint: True
 data_augmentation: 1
 max_num: False
@@ -7,7 +7,7 @@ skip: 20
 # trainer
 trainer:
   max_epochs : 400
-  gpus : [1]
+  gpus : [0]
   fast_dev_run: False
 
 
@@ -20,9 +20,9 @@ pretraining:
 
 
 
-lr_scheduler_G : ReduceLROnPlateau
-lr_scheduler_D : ReduceLROnPlateau
-lr_scheduler_pretrain : ReduceLROnPlateau
+lr_scheduler_G : False
+lr_scheduler_D : False
+lr_scheduler_pretrain : False
 
 # training
 best_k : 10

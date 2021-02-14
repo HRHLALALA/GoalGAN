@@ -150,8 +150,9 @@ class TrajectoryDataset(Dataset):
 
     def load_image(self, _path, scene, ):
         img = Image.open(_path)
+        
         if "stanford" in self.dataset_name:
-
+            
             ratio = self.homography.loc[((self.homography["File"] == "{}.jpg".format(scene)) & (
                         self.homography["Version"] == "A")), "Ratio"].iloc[0]
 
@@ -531,9 +532,9 @@ class TrajectoryDataset(Dataset):
         collect_data = True
         for path in [file for file in self.all_files if ".jpg" in file]:
 
-            scene_path, data_type = path.split(".")
-            scene = scene_path.split("/")[-1]
-
+            scene_path, data_type = os.path.splitext(path)
+            data_type = data_type[1:]
+            scene = os.path.basename(scene_path)
             img_parts = scene.split("-")
 
             if self.load_semantic_map and img_parts[-1] == "op":
@@ -555,9 +556,9 @@ class TrajectoryDataset(Dataset):
             if self.special_scene and not self.special_scene in path:
                 continue
 
-            scene_path, data_type = path.split(".")
-            scene = scene_path.split("/")[-1]
-
+            scene_path, data_type = os.path.splitext(path)
+            data_type = data_type[1:]
+            scene = os.path.basename(scene_path)
             if data_type == "txt":
 
 
@@ -614,8 +615,6 @@ class TrajectoryDataset(Dataset):
                         if self.wall_available:
                             self.walls_list.append([item.copy() for item in self.wall_points_dict[scene]])
                         if not self.data_augmentation:
-
-
                             img = self.images[scene]["scaled_image"]
                             small_image = self.images[scene]["global_image"]
                             tiny_image = self.images[scene]["local_image"]
@@ -625,7 +624,6 @@ class TrajectoryDataset(Dataset):
                                  "global_image": copy.copy(small_image), "local_image": copy.copy(tiny_image)})
 
                         scene_nr.append(1)
-
         seq_list = np.concatenate(seq_list, axis=0)
 
 
@@ -803,7 +801,7 @@ class TrajectoryDataset(Dataset):
                         walls[i][:, 1] = img.height * scale2orig - walls[i][:, 1]
 
 
-        img = TF.rotate(img,alpha / np.pi * 180 , expand = True)
+        img = TF.rotate(img,float(alpha / np.pi * 180) , expand = True)
         corners_trans = rotate(corners, center, alpha)
         offset = corners_trans.min(axis=0)[0]
         corners_trans -= offset
