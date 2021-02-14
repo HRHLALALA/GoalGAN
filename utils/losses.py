@@ -162,7 +162,7 @@ def l2_loss(pred_traj, pred_traj_gt, mode='average', type = "mse"):
         return loss.sum(dim=0)
 
 
-def displacement_error(pred_traj, pred_traj_gt, mode='sum'):
+def displacement_error(pred_traj, pred_traj_gt,consider_ped =None, mode='sum'):
     """
     Input:
     - pred_traj: Tensor of shape (seq_len, batch, 2). Predicted trajectory.
@@ -189,7 +189,7 @@ def displacement_error(pred_traj, pred_traj_gt, mode='sum'):
 
 
 def final_displacement_error(
-    pred_pos, pred_pos_gt, mode='sum'
+    pred_pos, pred_pos_gt, consider_ped=None, mode='sum'
 ):
     """
     Input:
