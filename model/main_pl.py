@@ -540,16 +540,25 @@ class TrajPredictor(pl.LightningModule):
 			schedulers = []
 			if self.hparams.lr_scheduler_G:
 				lr_scheduler_G = getattr(torch.optim.lr_scheduler, self.hparams.lr_scheduler_G)(opt_g)
-				schedulers.append(lr_scheduler_G)
+				schedulers.append({
+					"scheduler":lr_scheduler_G,
+					'monitor': 'val_loss',
+					'frequency':1
+				})
 			else:
 				schedulers.append(None)
 
 			if self.hparams.lr_scheduler_D:
 				lr_scheduler_D = getattr(torch.optim.lr_scheduler, self.hparams.lr_scheduler_D)(opt_d)
-				schedulers.append(lr_scheduler_D)
+				schedulers.append({
+					"scheduler":lr_scheduler_D,
+					'monitor': 'val_loss',
+					'frequency':1
+				})
 			else:
 				schedulers.append(None)
 
 			self.gsteps = self.hparams.g_steps
 			self.dsteps = 0
+			
 			return [opt_g, opt_d], schedulers

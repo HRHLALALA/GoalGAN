@@ -20,9 +20,9 @@ pretraining:
 
 
 
-lr_scheduler_G : False
-lr_scheduler_D : False
-lr_scheduler_pretrain : False
+lr_scheduler_G : ReduceLROnPlateau
+lr_scheduler_D : ReduceLROnPlateau
+lr_scheduler_pretrain : ReduceLROnPlateau
 
 # training
 best_k : 10

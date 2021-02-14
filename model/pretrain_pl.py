@@ -185,7 +185,11 @@ class Pretrain(pl.LightningModule):
 
 		
 		if self.cfg.lr_scheduler_pretrain:
-			lr_scheduler_pretrain = [getattr(torch.optim.lr_scheduler, self.cfg.lr_scheduler_pretrain)(opt_g)]
+			scheduler = {
+				"scheduler":getattr(torch.optim.lr_scheduler, self.cfg.lr_scheduler_pretrain)(opt_g),
+				"monitor": "val_loss"
+			}
+			lr_scheduler_pretrain = [scheduler]
 
 		else:
 			lr_scheduler_pretrain = []
