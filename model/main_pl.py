@@ -168,7 +168,7 @@ class TrajPredictor(pl.LightningModule):
 
 
 
-		if self.hparams.absolute:
+		if self.hparams.absolute:   
 			l2 = self.loss_fns["L2"](
 				batch["gt_xy"],
 				generator_out["out_xy"],
@@ -427,9 +427,10 @@ class TrajPredictor(pl.LightningModule):
 			batch["gt_xy"], out["out_xy"], mode='raw'
 		)
 
-		ade_error = ade_error.view(best_k, batch_size)
 
-		fde_error = fde_error.view(best_k, batch_size)
+		# ade_error = ade_error.view(best_k, batch_size)
+
+		# fde_error = fde_error.view(best_k, batch_size)
 
 		for idx, (start, end) in enumerate(batch["seq_start_end"]):
 			ade_error_sum = torch.sum(ade_error[:, start:end], dim=1)

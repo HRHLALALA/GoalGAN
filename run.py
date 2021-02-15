@@ -45,6 +45,7 @@ def run(cfg):
 	This is helpful to get reasonable goal estimates before  training the entire pipeline. 
 	Otherwise, the network may converge to an undesired local minimum."""
 	# pretrain if wished
+	print(cfg.pretrain)
 	if cfg.pretrain:
 		pretrain_func(generator=model.generator,
 					  train_dset=model.train_dset,

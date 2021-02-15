@@ -177,7 +177,6 @@ def displacement_error(pred_traj, pred_traj_gt,consider_ped =None, mode='sum'):
     loss = pred_traj_gt - pred_traj
 
     
-    
 
     if mode == 'sum':
         return torch.sum(loss)
@@ -185,7 +184,7 @@ def displacement_error(pred_traj, pred_traj_gt,consider_ped =None, mode='sum'):
         return torch.sum(loss)/( seq_len * num_traj)
     elif mode == 'raw':
      
-        return torch.sum(loss, 1)
+        return loss
 
 
 def final_displacement_error(
