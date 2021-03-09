@@ -53,7 +53,7 @@ class TrajPredictor(pl.LightningModule):
 		if self.hparams.batch_size_scheduler:
 			self.batch_size = self.hparams.batch_size_scheduler
 		else:
-			self.batch_size = cfg.batch_size
+			self.batch_size = self.hparams.batch_size
 
 	"""########## DATE PREPARATION ##########"""
 	def setupData(self):
@@ -280,7 +280,7 @@ class TrajPredictor(pl.LightningModule):
 										  out_dxdy=traj_fake_rel,
 										  images_patches=image_patches)
 
-		loss_adv = self.loss_weights["G"] * self.loss_fns["ADV"](fake_scores, True).clamp(min=0)
+		loss_adv = self.loss_weights["ADV"] * self.loss_fns["ADV"](fake_scores, True).clamp(min=0)
 
 		total_loss+=loss_adv
 		tqdm_dict["ADV_train"] = loss_adv

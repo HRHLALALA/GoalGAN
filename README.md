@@ -104,5 +104,13 @@ The training process and models are saved and logged with tensorboard. The final
   </tr>
 </table>
 
+## Data Format
+To run or re-train the model with new data provide the trajectories in a txt file with the following format:
+
+```<frame_id>, <ped_id>, <x>, <y>```
+
+As well as RGB images of the corresponding scene in the dataset folder.
+
+
 ## Contact
 If you find any bugs or have any questions, please open an issue or contact me via mail (patrick.dendorfer@tum.de).
